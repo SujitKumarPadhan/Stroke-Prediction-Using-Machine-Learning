@@ -2,13 +2,13 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+# Load Preprocessor and Model
 preprocessor = joblib.load("preprocessor.pkl")
 model = joblib.load("stroke_prediction_model.pkl")
 
 st.set_page_config(page_title="Stroke Prediction", page_icon="❤️")
 
 st.title("❤️ Stroke Prediction App")
-
 st.write("Enter Patient Details")
 
 gender = st.selectbox("Gender", ["Male", "Female", "Other"])
@@ -64,25 +64,27 @@ smoking_status = st.selectbox(
 
 if st.button("Predict"):
 
-data = pd.DataFrame({
-    "gender":[gender],
-    "age":[age],
-    "hypertension":[hypertension],
-    "heart_disease":[heart_disease],
-    "ever_married":[ever_married],
-    "work_type":[work_type],
-    "Residence_type":[Residence_type],
-    "avg_glucose_level":[avg_glucose_level],
-    "bmi":[bmi],
-    "smoking_status":[smoking_status]
-})
+    data = pd.DataFrame({
+        "gender": [gender],
+        "age": [age],
+        "hypertension": [hypertension],
+        "heart_disease": [heart_disease],
+        "ever_married": [ever_married],
+        "work_type": [work_type],
+        "Residence_type": [Residence_type],
+        "avg_glucose_level": [avg_glucose_level],
+        "bmi": [bmi],
+        "smoking_status": [smoking_status]
+    })
 
-X = preprocessor.transform(data)
+    X = preprocessor.transform(data)
 
-prediction = model.predict(X)[0]
-probability = model.predict_proba(X)[0]
+    prediction = model.predict(X)[0]
+    probability = model.predict_proba(X)[0]
 
     if prediction == 1:
-        st.error("⚠ High Stroke Risk")
+        st.error("⚠️ High Stroke Risk")
+        st.write(f"Probability: {probability[1]:.2%}")
     else:
         st.success("✅ Low Stroke Risk")
+        st.write(f"Probability: {probability[0]:.2%}")
