@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# Load Model
+preprocessor = joblib.load("preprocessor.pkl")
 model = joblib.load("stroke_prediction_model.pkl")
 
 st.set_page_config(page_title="Stroke Prediction", page_icon="❤️")
@@ -64,23 +64,23 @@ smoking_status = st.selectbox(
 
 if st.button("Predict"):
 
-    data = pd.DataFrame({
+data = pd.DataFrame({
+    "gender":[gender],
+    "age":[age],
+    "hypertension":[hypertension],
+    "heart_disease":[heart_disease],
+    "ever_married":[ever_married],
+    "work_type":[work_type],
+    "Residence_type":[Residence_type],
+    "avg_glucose_level":[avg_glucose_level],
+    "bmi":[bmi],
+    "smoking_status":[smoking_status]
+})
 
-        "gender":[gender],
-        "age":[age],
-        "hypertension":[hypertension],
-        "heart_disease":[heart_disease],
-        "ever_married":[ever_married],
-        "work_type":[work_type],
-        "Residence_type":[Residence_type],
-        "avg_glucose_level":[avg_glucose_level],
-        "bmi":[bmi],
-        "smoking_status":[smoking_status]
+X = preprocessor.transform(data)
 
-    })
-
-    prediction = model.predict(data)[0]
-    probability = model.predict_proba(data)[0]
+prediction = model.predict(X)[0]
+probability = model.predict_proba(X)[0]
 
     if prediction == 1:
         st.error("⚠ High Stroke Risk")
