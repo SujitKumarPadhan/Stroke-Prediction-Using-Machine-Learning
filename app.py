@@ -3,7 +3,16 @@ import pandas as pd
 import joblib
 
 # Load Model
-model = joblib.load("stroke_prediction_model.pkl")
+#model = joblib.load("stroke_prediction_model.pkl")
+#Testing perpose
+import streamlit as st
+
+st.set_page_config(page_title="Test")
+
+st.title("Hello Sujit")
+
+st.success("Deployment Successful")
+#--------------------#
 
 st.set_page_config(page_title="Stroke Prediction", page_icon="❤️")
 
@@ -79,12 +88,13 @@ if st.button("Predict"):
 
     })
 
-    prediction = model.predict(data)[0]
-    probability = model.predict_proba(data)[0]
+    # prediction = model.predict(data)[0]
+    # probability = model.predict_proba(data)[0]
 
-    if prediction == 1:
-        st.error("⚠ High Stroke Risk")
-    else:
-        st.success("✅ Low Stroke Risk")
+    # if prediction == 1:
+    #     st.error("⚠ High Stroke Risk")
+    # else:
+    #     st.success("✅ Low Stroke Risk")
 
-    
+    if st.button("Predict"):
+    st.success("App is running successfully!")
