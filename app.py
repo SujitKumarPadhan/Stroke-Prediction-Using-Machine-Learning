@@ -3,7 +3,7 @@ import pandas as pd
 import joblib
 
 # Load Model
-model = joblib.load("stroke_prediction_model (1).pkl")
+model = joblib.load("stroke_prediction_model.pkl")
 
 st.set_page_config(page_title="Stroke Prediction", page_icon="❤️")
 
